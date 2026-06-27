@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import {
   motion,
@@ -7,6 +7,7 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
+import { interests } from "../data/siteContent";
 
 const marqueeImages = [
   "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
@@ -60,34 +61,6 @@ const aboutDecor = [
     alt: "3D object group",
     x: 80,
     delay: 0.3,
-  },
-];
-
-const services = [
-  {
-    name: "3D Modeling",
-    description:
-      "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.",
-  },
-  {
-    name: "Rendering",
-    description:
-      "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.",
-  },
-  {
-    name: "Motion Design",
-    description:
-      "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.",
-  },
-  {
-    name: "Branding",
-    description:
-      "Crafting cohesive visual identities, from logos to full brand systems, that communicate a clear and memorable presence.",
-  },
-  {
-    name: "Web Design",
-    description:
-      "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.",
   },
 ];
 
@@ -276,19 +249,19 @@ function AboutSection() {
   );
 }
 
-function ServicesSection() {
+function InterestsSection() {
   return (
-    <section className="jack-services" id="services">
+    <section className="jack-services" id="interests">
       <FadeIn>
-        <h2 className="jack-section-heading">Services</h2>
+        <h2 className="jack-section-heading">Interests</h2>
       </FadeIn>
       <div className="jack-service-list">
-        {services.map((service, index) => (
-          <FadeIn className="jack-service-item" delay={index * 0.1} y={26} key={service.name}>
+        {interests.map((interest, index) => (
+          <FadeIn className="jack-service-item" delay={index * 0.1} y={26} key={interest.title}>
             <span>{String(index + 1).padStart(2, "0")}</span>
             <div>
-              <h3>{service.name}</h3>
-              <p>{service.description}</p>
+              <h3>{interest.title}</h3>
+              <p>{interest.text}</p>
             </div>
           </FadeIn>
         ))}
@@ -299,9 +272,9 @@ function ServicesSection() {
 
 function ProjectsSection() {
   return (
-    <section className="jack-projects" id="projects">
+    <section className="jack-projects" id="works">
       <FadeIn>
-        <h2 className="hero-heading jack-section-heading">Project</h2>
+        <h2 className="hero-heading jack-section-heading">Works</h2>
       </FadeIn>
       <div className="jack-project-stack">
         {projects.map((project, index) => (
@@ -317,19 +290,28 @@ function ProjectsSection() {
   );
 }
 
-export default function JackPortfolioSections() {
-  const [themeSnapshot, setThemeSnapshot] = useState("light");
-
-  useEffect(() => {
-    setThemeSnapshot(document.documentElement.dataset.theme || "light");
-  }, []);
-
+function BlogSection() {
   return (
-    <div className="jack-portfolio" data-theme-snapshot={themeSnapshot}>
-      <MarqueeSection />
+    <section className="jack-blog" id="blog">
+      <FadeIn>
+        <h2 className="hero-heading jack-section-heading">Blog</h2>
+      </FadeIn>
+      <FadeIn className="jack-blog-card" delay={0.12} y={24}>
+        <p>Latest writing</p>
+        <h3>《乡土中国正在消失》</h3>
+      </FadeIn>
+    </section>
+  );
+}
+
+export default function JackPortfolioSections() {
+  return (
+    <div className="jack-portfolio">
       <AboutSection />
-      <ServicesSection />
+      <MarqueeSection />
       <ProjectsSection />
+      <InterestsSection />
+      <BlogSection />
       <section className="jack-contact" id="contact">
         <h2 className="hero-heading">Let&apos;s make it cinematic.</h2>
         <ContactButton />

@@ -89,7 +89,7 @@ export default function HeroMusicPlayer() {
   };
 
   return (
-    <div className="poster-music-control">
+    <div className="poster-music-control" id="music">
       <div className="poster-player-track">
         <div className="poster-progress-wrap">
           <span className="poster-track-time" aria-hidden="true">

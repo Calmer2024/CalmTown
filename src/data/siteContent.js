@@ -13,9 +13,10 @@ import { siGithub, siNeteasecloudmusic, siTiktok, siXiaohongshu } from "simple-i
 
 export const navItems = [
   { label: "About", href: "#about" },
-  { label: "Price", href: "#services" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Works", href: "#works" },
+  { label: "Interests", href: "#interests" },
+  { label: "Blog", href: "#blog" },
+  { label: "Music", href: "#music" },
 ];
 
 export const socialLinks = [
