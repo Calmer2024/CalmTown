@@ -92,6 +92,9 @@ img {
 }
 
 .app-shell {
+  --jack-bg: #000000;
+  --jack-text: #d7e2ea;
+  --jack-muted: rgb(215 226 234 / 0.62);
   position: relative;
   overflow-x: clip;
   background: var(--bg);
@@ -130,19 +133,13 @@ img {
   min-width: 0;
 }
 
-.brand-mark span {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid rgb(255 255 255 / 0.72);
-  border-radius: 50%;
-  background: transparent;
-  color: #ffffff;
-  font-family: var(--font-nav-display);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0;
+.brand-logo {
+  display: block;
+  width: clamp(36px, 3vw, 46px);
+  height: clamp(36px, 3vw, 46px);
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgb(6 24 28 / 0.22));
 }
 
 .brand-mark strong {
@@ -1336,8 +1333,8 @@ img {
   -webkit-text-fill-color: transparent;
 }
 
-.jack-portfolio {
-  --jack-bg: #0c0c0c;
+.portfolio-section {
+  --jack-bg: #000000;
   --jack-text: #d7e2ea;
   --jack-muted: rgb(215 226 234 / 0.62);
   position: relative;
@@ -1352,7 +1349,7 @@ img {
   gap: 0.75rem;
   overflow: hidden;
   padding: clamp(6rem, 11vw, 10rem) 0 2.5rem;
-  background: var(--jack-bg);
+  background: #000000;
 }
 
 .jack-marquee-viewport {
@@ -1373,18 +1370,44 @@ img {
   flex: 0 0 auto;
   border-radius: 22px;
   object-fit: cover;
-  background: #171717;
+  background: #000000;
+}
+
+/* Section headings use the shared CalmTown rule: Bebas Neue title plus a top-right 0X number. */
+.section-heading {
+  position: relative;
+  width: min(100%, 1180px);
+  margin: 0;
+  margin-inline: auto;
+  color: inherit;
+  text-align: center;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: currentColor;
+  font-family: var(--font-poster-display);
+  font-size: clamp(3rem, 12vw, 10rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.section-heading-number {
+  position: absolute;
+  top: 0.05em;
+  right: 0;
+  color: currentColor;
+  font-family: var(--font-poster-display);
+  font-size: clamp(1.05rem, 2.2vw, 2.45rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
 }
 
 .jack-section-heading {
-  margin: 0;
-  font-family: "Kanit", var(--font-sans);
-  font-size: clamp(3rem, 12vw, 10rem);
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 0.86;
-  text-align: center;
-  text-transform: uppercase;
+  width: min(100%, 1180px);
 }
 
 .jack-contact-button,
@@ -1427,8 +1450,12 @@ img {
 
 .jack-services .jack-section-heading {
   color: #0c0c0c;
-  -webkit-text-fill-color: #0c0c0c;
   margin-bottom: clamp(4rem, 7vw, 7rem);
+}
+
+.jack-services .section-heading h2,
+.jack-services .section-heading-number {
+  -webkit-text-fill-color: currentColor;
 }
 
 .jack-service-list {
@@ -1476,49 +1503,62 @@ img {
 }
 
 .jack-projects {
-  --project-top: clamp(5.5rem, 9vw, 8rem);
   position: relative;
   z-index: 3;
   padding: clamp(5rem, 8vw, 8rem) clamp(1rem, 3vw, 2.5rem) clamp(4rem, 8vw, 7rem);
   margin-top: clamp(-3.5rem, -5vw, -2.5rem);
   border-radius: clamp(40px, 5vw, 60px) clamp(40px, 5vw, 60px) 0 0;
   background: var(--jack-bg);
-  color: var(--jack-text);
+  color: #ffffff;
 }
 
-.jack-project-stack {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 3rem);
+.jack-project-heading {
+  color: #ffffff;
+  background: none;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.jack-projects :where(h2, h3, p, span, a) {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.jack-project-stack.scroll-stack-scroller {
   margin-top: clamp(3rem, 6vw, 6rem);
+  overflow: visible;
+  height: auto;
+  overscroll-behavior: auto;
 }
 
-.jack-project-frame {
-  height: 85vh;
-  min-height: 720px;
+.jack-project-stack .scroll-stack-inner {
+  padding: clamp(2rem, 4vw, 4rem) 0 clamp(32rem, 48vw, 48rem);
 }
 
-.jack-project-card {
-  position: sticky;
+.jack-project-card.scroll-stack-card {
+  position: relative;
   display: grid;
   gap: clamp(1rem, 2vw, 1.5rem);
+  min-height: clamp(620px, 72vh, 760px);
+  margin: 0;
   overflow: hidden;
   padding: clamp(1rem, 2vw, 2rem);
-  border: 2px solid var(--jack-text);
+  border: 2px solid #ffffff;
   border-radius: clamp(40px, 5vw, 60px);
   background: var(--jack-bg);
   transform-origin: top center;
+  box-shadow: none;
 }
 
 .jack-project-top {
   display: grid;
-  grid-template-columns: minmax(5.2rem, 0.28fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(5.2rem, 0.2fr) minmax(0, 1fr) auto;
   gap: clamp(1rem, 3vw, 2rem);
   align-items: center;
 }
 
 .jack-project-top p {
   margin: 0;
-  color: var(--jack-muted);
+  color: #ffffff;
   font-size: clamp(0.82rem, 1.2vw, 1rem);
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -1527,7 +1567,7 @@ img {
 
 .jack-project-top h3 {
   margin: 0.3rem 0 0;
-  color: var(--jack-text);
+  color: #ffffff;
   font-size: clamp(1.8rem, 4vw, 4.8rem);
   font-weight: 700;
   letter-spacing: 0;
@@ -1535,9 +1575,43 @@ img {
   text-transform: uppercase;
 }
 
+.jack-project-description {
+  max-width: 46rem;
+  margin: 0.85rem 0 0;
+  color: #ffffff;
+  font-size: clamp(0.92rem, 1.24vw, 1.12rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.58;
+  text-transform: none;
+}
+
+.jack-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: clamp(0.85rem, 1.5vw, 1.2rem);
+}
+
+.jack-project-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0.28rem 0.66rem;
+  border: 1px solid rgb(255 255 255 / 0.38);
+  border-radius: var(--radius-pill);
+  color: #ffffff;
+  font-family: var(--font-note);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
 .jack-live-button {
   padding: 0.85rem clamp(1.5rem, 3vw, 2.5rem);
-  border: 2px solid var(--jack-text);
+  border: 2px solid #ffffff;
+  color: #ffffff;
   background: transparent;
   transition: background 200ms ease;
 }
@@ -1551,6 +1625,7 @@ img {
   grid-template-columns: 0.4fr 0.6fr;
   gap: clamp(0.7rem, 1.5vw, 1.1rem);
   min-height: 0;
+  align-items: stretch;
 }
 
 .jack-project-images > div {
@@ -1564,7 +1639,7 @@ img {
   min-height: 0;
   border-radius: clamp(28px, 4vw, 54px);
   object-fit: cover;
-  background: #151515;
+  background: #000000;
 }
 
 .jack-project-images > div img:first-child {
@@ -1601,12 +1676,16 @@ img {
   text-align: center;
 }
 
+.jack-blog .jack-section-heading {
+  color: #ffffff;
+}
+
 .jack-blog-card {
   width: min(100%, 720px);
   padding: clamp(1.6rem, 4vw, 3rem);
   border: 2px solid rgb(215 226 234 / 0.74);
   border-radius: clamp(32px, 4vw, 52px);
-  background: rgb(215 226 234 / 0.06);
+  background: #000000;
 }
 
 .jack-blog-card p {
@@ -1698,9 +1777,6 @@ img {
     justify-self: start;
   }
 
-  .jack-project-frame {
-    min-height: 660px;
-  }
 }
 
 @media (max-width: 760px) {
@@ -1779,14 +1855,12 @@ img {
     font-size: clamp(3rem, 20vw, 5.4rem);
   }
 
-  .jack-project-frame {
-    height: auto;
-    min-height: 0;
+  .jack-project-stack .scroll-stack-inner {
+    padding-bottom: 24rem;
   }
 
-  .jack-project-card {
-    position: relative;
-    top: auto !important;
+  .jack-project-card.scroll-stack-card {
+    min-height: auto;
     border-radius: 32px;
   }
 

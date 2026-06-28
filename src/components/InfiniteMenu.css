@@ -1,24 +1,43 @@
 .friends-menu-section {
   position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
   width: 100%;
-  height: clamp(520px, 56vw, 760px);
-  min-height: 520px;
+  min-height: clamp(760px, 100vh, 980px);
   overflow: hidden;
   isolation: isolate;
-  padding: 0;
+  padding: clamp(5.5rem, 8vw, 8rem) clamp(1.25rem, 3vw, 2.5rem);
   background: #000000;
   color: #ffffff;
+}
+
+.friends-section-heading {
+  width: min(100%, 1180px);
+  color: #ffffff;
+}
+
+.friends-menu-tip {
+  width: min(100%, 1180px);
+  margin: calc(clamp(1.4rem, 3vw, 2.6rem) * -0.35) 0 0;
+  color: rgb(255 255 255 / 0.62);
+  font-family: var(--font-note);
+  font-size: clamp(0.68rem, 0.78vw, 0.86rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .friends-menu-shell {
   position: relative;
   z-index: 1;
-  width: 100%;
-  height: 100%;
+  width: min(100%, 1180px);
+  height: clamp(520px, 54vw, 720px);
   margin: 0;
   overflow: hidden;
-  border: 0;
-  border-radius: 0;
+  border: 1px solid rgb(255 255 255 / 0.9);
+  border-radius: clamp(28px, 3.2vw, 44px);
   background: #000000;
   box-shadow: none;
 }
@@ -84,49 +103,12 @@
   object-fit: cover;
 }
 
-.friend-menu-title,
-.friend-menu-note,
 .friend-face-heading,
 .friend-face-message {
   position: absolute;
   z-index: 3;
   pointer-events: none;
   user-select: none;
-}
-
-.friend-menu-title {
-  top: clamp(2rem, 4vw, 4rem);
-  left: clamp(2rem, 4.6vw, 5rem);
-  color: rgb(255 255 255 / 0.92);
-  font-family: var(--font-poster-display);
-  font-size: clamp(3rem, 5.7vw, 6.7rem);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  line-height: 0.86;
-  text-transform: uppercase;
-}
-
-.friends-menu-section.is-entered .friend-menu-title {
-  animation: friends-title-enter 780ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both;
-}
-
-.friend-menu-note {
-  bottom: clamp(1.45rem, 2.3vw, 2.3rem);
-  right: clamp(2rem, 4.6vw, 5rem);
-  width: min(23vw, 310px);
-  margin: 0;
-  color: rgb(255 255 255 / 0.66);
-  font-family: var(--font-note);
-  font-size: clamp(0.64rem, 0.78vw, 0.86rem);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  line-height: 1.24;
-  text-align: right;
-  text-transform: uppercase;
-}
-
-.friends-menu-section.is-entered .friend-menu-note {
-  animation: friends-note-enter 860ms cubic-bezier(0.16, 1, 0.3, 1) 280ms both;
 }
 
 .friend-face-heading {
@@ -230,30 +212,6 @@
   }
 }
 
-@keyframes friends-title-enter {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes friends-note-enter {
-  from {
-    opacity: 0;
-    transform: translate(18px, 10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
 @keyframes friends-face-heading-enter {
   from {
     opacity: 0;
@@ -283,8 +241,6 @@
   .friends-menu-section.is-entered .friends-menu-shell,
   .friends-menu-section.is-entered #infinite-grid-menu-canvas,
   .friends-menu-section.is-entered .infinite-menu-static,
-  .friends-menu-section.is-entered .friend-menu-title,
-  .friends-menu-section.is-entered .friend-menu-note,
   .friends-menu-section.is-entered .friend-face-heading,
   .friends-menu-section.is-entered .friend-face-message {
     animation: none;
@@ -294,9 +250,7 @@
   .friends-menu-section:not(.is-entered) .friends-menu-shell,
   .friends-menu-section.is-entered .friends-menu-shell,
   .friends-menu-section.is-entered #infinite-grid-menu-canvas,
-  .friends-menu-section.is-entered .infinite-menu-static,
-  .friends-menu-section.is-entered .friend-menu-title,
-  .friends-menu-section.is-entered .friend-menu-note {
+  .friends-menu-section.is-entered .infinite-menu-static {
     transform: none;
   }
 }

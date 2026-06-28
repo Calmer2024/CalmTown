@@ -10,7 +10,7 @@ export default function SiteNav() {
   return (
     <header className="site-nav">
       <a className="brand-mark" href="#home" aria-label="CALM TOWN home">
-        <span>CT</span>
+        <img className="brand-logo" src="/ct-logo.png" alt="" aria-hidden="true" />
         <strong>CALM TOWN</strong>
       </a>
 

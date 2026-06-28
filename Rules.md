@@ -11,3 +11,7 @@ These rules define how Codex should work in this project.
 ## Code Architecture
 
 1. Write code with loose coupling in mind. Keep modules focused and avoid making any single component or file overly bulky.
+
+## Section Design
+
+1. New homepage sections should use the shared `SectionHeading` pattern: a Bebas Neue uppercase title with a top-right `0X` section number.

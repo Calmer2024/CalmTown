@@ -1105,13 +1105,6 @@ export default function InfiniteMenu({ items = EMPTY_ITEMS, scale = 1.0 }) {
 
   return (
     <div className="infinite-menu-root" aria-label={`${itemTitle}: ${itemDescription}`}>
-      <div className="friend-menu-title" aria-hidden="true">
-        FRIEND SAYS
-      </div>
-      <p className="friend-menu-note" aria-hidden="true">
-        SMALL WORDS FROM PEOPLE WHO PASSED THROUGH CALMTOWN, SAVED HERE LIKE LIGHT ON QUIET GLASS.
-      </p>
-
       {!shouldUseStaticFallback && (
         <canvas id="infinite-grid-menu-canvas" ref={canvasRef} aria-hidden="true" />
       )}

@@ -1,9 +1,11 @@
 import useRevealOnScroll from "./hooks/useRevealOnScroll";
 import FloatingStaggeredMenu from "./components/FloatingStaggeredMenu";
 import SiteNav from "./layout/SiteNav";
+import BlogSection from "./sections/BlogSection";
 import FriendsMenuSection from "./sections/FriendsMenuSection";
 import Hero from "./sections/Hero";
-import JackPortfolioSections from "./sections/JackPortfolioSections";
+import InterestsSection from "./sections/InterestsSection";
+import WorksSection from "./sections/WorksSection";
 
 export default function App() {
   useRevealOnScroll();
@@ -15,7 +17,9 @@ export default function App() {
       <main>
         <Hero />
         <FriendsMenuSection />
-        <JackPortfolioSections />
+        <WorksSection />
+        <InterestsSection />
+        <BlogSection />
       </main>
     </div>
   );

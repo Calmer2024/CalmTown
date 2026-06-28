@@ -54,11 +54,15 @@
 - Works
     - 开发作品集 Projects
         - AgentHub
+            - 三端互通
         - MuseLens
+            - 移动端
         - Thryve
+            - 桌面端
         - InsureSpar
+            - 网页端
         - RiversToMountains 山河图鉴
-        - ColorWar
+            - 网页设计
 
     - 设计作品集
         - 海报设计
