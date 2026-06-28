@@ -33,37 +33,6 @@ const marqueeImages = [
   "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif",
 ];
 
-const aboutDecor = [
-  {
-    className: "jack-decor jack-decor-moon",
-    src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png",
-    alt: "3D moon icon",
-    x: -80,
-    delay: 0.1,
-  },
-  {
-    className: "jack-decor jack-decor-shape",
-    src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png",
-    alt: "3D abstract object",
-    x: -80,
-    delay: 0.25,
-  },
-  {
-    className: "jack-decor jack-decor-lego",
-    src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png",
-    alt: "3D lego icon",
-    x: 80,
-    delay: 0.15,
-  },
-  {
-    className: "jack-decor jack-decor-group",
-    src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png",
-    alt: "3D object group",
-    x: 80,
-    delay: 0.3,
-  },
-];
-
 const projects = [
   {
     name: "Nextlevel Studio",
@@ -96,7 +65,6 @@ const projects = [
 
 const MotionArticle = motion.article;
 const MotionDiv = motion.div;
-const MotionSpan = motion.span;
 
 function FadeIn({ children, className = "", delay = 0, duration = 0.7, x = 0, y = 30 }) {
   const reduce = useReducedMotion();
@@ -120,44 +88,6 @@ function ContactButton() {
       Contact Me
       <ArrowUpRight size={17} weight="bold" />
     </a>
-  );
-}
-
-function AnimatedCharacter({ char, index, total, progress }) {
-  const start = index / total;
-  const end = start + 0.16;
-  const opacity = useTransform(progress, [start, end], [0.2, 1]);
-
-  return (
-    <span className="jack-char">
-      <span className="jack-char-placeholder">{char}</span>
-      <MotionSpan aria-hidden="true" style={{ opacity }}>
-        {char}
-      </MotionSpan>
-    </span>
-  );
-}
-
-function AnimatedText({ text }) {
-  const target = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target,
-    offset: ["start 0.8", "end 0.2"],
-  });
-  const characters = Array.from(text);
-
-  return (
-    <p className="jack-animated-text" ref={target}>
-      {characters.map((char, index) => (
-        <AnimatedCharacter
-          char={char}
-          index={index}
-          progress={scrollYProgress}
-          total={characters.length}
-          key={`${char}-${index}`}
-        />
-      ))}
-    </p>
   );
 }
 
@@ -228,27 +158,6 @@ function MarqueeSection() {
   );
 }
 
-function AboutSection() {
-  return (
-    <section className="jack-about" id="about">
-      {aboutDecor.map((item) => (
-        <FadeIn className={item.className} delay={item.delay} duration={0.9} x={item.x} y={0} key={item.src}>
-          <img src={item.src} alt={item.alt} loading="lazy" />
-        </FadeIn>
-      ))}
-      <div className="jack-about-inner">
-        <FadeIn y={40}>
-          <h2 className="hero-heading jack-section-heading">About me</h2>
-        </FadeIn>
-        <AnimatedText text="With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!" />
-        <FadeIn delay={0.18} y={20}>
-          <ContactButton />
-        </FadeIn>
-      </div>
-    </section>
-  );
-}
-
 function InterestsSection() {
   return (
     <section className="jack-services" id="interests">
@@ -307,7 +216,6 @@ function BlogSection() {
 export default function JackPortfolioSections() {
   return (
     <div className="jack-portfolio">
-      <AboutSection />
       <MarqueeSection />
       <ProjectsSection />
       <InterestsSection />

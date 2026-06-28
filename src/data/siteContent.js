@@ -1,12 +1,8 @@
 import {
-  BookOpenText,
   Camera,
-  Code,
   Compass,
   Images,
-  PenNib,
   PlayCircle,
-  Sparkle,
   Waveform,
 } from "@phosphor-icons/react";
 import { siGithub, siNeteasecloudmusic, siTiktok, siXiaohongshu } from "simple-icons";
@@ -53,85 +49,55 @@ export const heroTags = [
 
 export const heroFluidColors = ["#fff7df", "#f2a565", "#87bed4", "#ffffff"];
 
-export const skillGroups = [
+export const friendMenuItems = [
   {
-    title: "Language",
-    summary: "把想法变成可运行的东西",
-    items: ["Python", "C++", "JS/TS"],
+    title: "bjHH",
+    subtitle: "Design witness",
+    description: "“你总能把混乱的想法整理成一个能被触摸的界面。”",
+    image: "/friends/bjhh.jpg",
+    alt: "小野留言的灰度照片",
   },
   {
-    title: "Interface",
-    summary: "界面、动效、叙事和细节",
-    items: ["React", "Design System", "Visual Design"],
+    title: "长木日",
+    subtitle: "Motion friend",
+    description: "看你做页面像看一段小电影，细节会慢慢亮起来。",
+    image: "/friends/cmr.jpg",
+    alt: "迟一留言的灰度照片",
   },
   {
-    title: "Backend",
-    summary: "让产品能稳定交付",
-    items: ["FastAPI", "MySQL", "Docker"],
+    title: "kk34",
+    subtitle: "Quiet reviewer",
+    description: "和你聊需求很舒服，复杂的事会被你一点点理顺。",
+    image: "/friends/curfur.jpg",
+    alt: "洛北留言的灰度照片",
   },
   {
-    title: "Agent",
-    summary: "和模型一起搭建工作流",
-    items: ["Claude", "Codex", "LangChain"],
+    title: "Ratiocc",
+    subtitle: "Visual neighbor",
+    description: "你的作品不像模板，更像一个可以暂时住进去的地方。",
+    image: "/friends/czh.jpg",
+    alt: "山眠留言的灰度照片",
   },
   {
-    title: "System",
-    summary: "从本地到部署的工程习惯",
-    items: ["Ubuntu", "CLI", "Automation"],
+    title: "hammer",
+    subtitle: "Code companion",
+    description: "你写代码的时候很安静，但最后总能把气氛做出来。",
+    image: "/friends/hammer.jpg",
+    alt: "阿澈留言的灰度照片",
   },
   {
-    title: "Creative",
-    summary: "把技术放进影像和声音",
-    items: ["UE5", "AIGC", "Music"],
-  },
-];
-
-export const workCategories = [
-  {
-    title: "Development",
-    deck: "Agent workflows, web apps, and tools that stay understandable after the demo.",
-    icon: Code,
-    image: "https://picsum.photos/seed/calmtown-development-console/1120/760",
-    items: ["AI agent prototypes", "React interfaces", "FastAPI services"],
+    title: "豆乳玉麒麟",
+    subtitle: "Rest reminder",
+    description: "别忘了休息。灵感也需要一点空白。",
+    image: "/friends/xjh.jpg",
+    alt: "夏屿留言的灰度照片",
   },
   {
-    title: "Design",
-    deck: "Poster systems, interface rhythm, and visual experiments with a practical center.",
-    icon: PenNib,
-    image: "https://picsum.photos/seed/calmtown-editorial-design/1120/760",
-    items: ["Personal identity", "Editorial layouts", "Interaction sketches"],
-  },
-  {
-    title: "AIGC",
-    deck: "Explorations where models become teammates for visual, audio, and product ideas.",
-    icon: Sparkle,
-    image: "https://picsum.photos/seed/calmtown-aigc-studio/1120/760",
-    items: ["Image workflows", "Prompt systems", "Creative automation"],
-  },
-  {
-    title: "Writing",
-    deck: "Notes about agents, frontends, tools, and how creative systems change daily work.",
-    icon: BookOpenText,
-    image: "https://picsum.photos/seed/calmtown-writing-desk/1120/760",
-    items: ["Technical notes", "Builder logs", "Idea fragments"],
-  },
-];
-
-export const testimonials = [
-  {
-    quote: "Calmer can make a prototype feel like a real place, not just a screen.",
-    name: "Lin Zhou",
-    role: "Product builder",
-  },
-  {
-    quote: "He notices the tiny interaction that makes people trust the whole system.",
-    name: "Yuxin Chen",
-    role: "Frontend friend",
-  },
-  {
-    quote: "The rare mix is code, image, sound, and patience in the same person.",
-    name: "Minghao Wu",
-    role: "Creative teammate",
+    title: "Calmer",
+    subtitle: "Author",
+    description: "“更冷静一点。”",
+    image: "/friends/calmer.jpg",
+    alt: "夏屿留言的灰度照片",
   },
 ];
 

@@ -1,0 +1,313 @@
+.friends-menu-section {
+  position: relative;
+  width: 100%;
+  height: clamp(520px, 56vw, 760px);
+  min-height: 520px;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0;
+  background: #000000;
+  color: #ffffff;
+}
+
+.friends-menu-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #000000;
+  box-shadow: none;
+}
+
+.friends-menu-section:not(.is-entered) .friends-menu-shell {
+  opacity: 0;
+  transform: translateY(34px) scale(0.985);
+}
+
+.friends-menu-section.is-entered .friends-menu-shell {
+  animation: friends-board-enter 940ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.infinite-menu-root {
+  --friend-center-image-radius: clamp(12rem, 19vw, 15.45rem);
+  --friend-name-gap: clamp(2.9rem, 4.15vw, 4.85rem);
+  --friend-heading-y-offset: clamp(1.85rem, 2.2vw, 2.45rem);
+  --friend-message-gap: clamp(2.7rem, 3.95vw, 4.5rem);
+  --friend-active-center-x: 50%;
+  --friend-active-center-y: 50%;
+  --friend-active-top-y: calc(50% - var(--friend-center-image-radius));
+  --friend-active-bottom-y: calc(50% + var(--friend-center-image-radius));
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000000;
+}
+
+.friends-menu-section.is-entered #infinite-grid-menu-canvas,
+.friends-menu-section.is-entered .infinite-menu-static {
+  animation: friends-canvas-enter 1120ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both;
+}
+
+#infinite-grid-menu-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  background: #000000;
+  outline: none;
+}
+
+#infinite-grid-menu-canvas:active {
+  cursor: grabbing;
+}
+
+.infinite-menu-static {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0.56;
+  pointer-events: none;
+}
+
+.infinite-menu-static img {
+  width: calc(var(--friend-center-image-radius) * 2);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friend-menu-title,
+.friend-menu-note,
+.friend-face-heading,
+.friend-face-message {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+}
+
+.friend-menu-title {
+  top: clamp(2rem, 4vw, 4rem);
+  left: clamp(2rem, 4.6vw, 5rem);
+  color: rgb(255 255 255 / 0.92);
+  font-family: var(--font-poster-display);
+  font-size: clamp(3rem, 5.7vw, 6.7rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.friends-menu-section.is-entered .friend-menu-title {
+  animation: friends-title-enter 780ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both;
+}
+
+.friend-menu-note {
+  bottom: clamp(1.45rem, 2.3vw, 2.3rem);
+  right: clamp(2rem, 4.6vw, 5rem);
+  width: min(23vw, 310px);
+  margin: 0;
+  color: rgb(255 255 255 / 0.66);
+  font-family: var(--font-note);
+  font-size: clamp(0.64rem, 0.78vw, 0.86rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.24;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.friends-menu-section.is-entered .friend-menu-note {
+  animation: friends-note-enter 860ms cubic-bezier(0.16, 1, 0.3, 1) 280ms both;
+}
+
+.friend-face-heading {
+  top: calc(var(--friend-active-top-y) - var(--friend-name-gap) + var(--friend-heading-y-offset));
+  left: var(--friend-active-center-x);
+  display: grid;
+  justify-items: center;
+  gap: clamp(0.34rem, 0.55vw, 0.5rem);
+  max-width: min(38vw, 26rem);
+  transform: translate(-50%, -100%);
+}
+
+.friends-menu-section.is-entered .friend-face-heading {
+  animation: friends-face-heading-enter 860ms cubic-bezier(0.16, 1, 0.3, 1) 240ms both;
+}
+
+.friend-face-name {
+  margin: 0;
+  color: rgb(255 255 255 / 0.9);
+  font-family: var(--font-note);
+  font-size: clamp(1.05rem, 1.54vw, 1.52rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+.friend-face-subtitle {
+  margin: 0;
+  color: rgb(255 255 255 / 0.54);
+  font-family: var(--font-note);
+  font-size: clamp(0.58rem, 0.72vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.friend-face-message {
+  top: calc(var(--friend-active-bottom-y) + var(--friend-message-gap));
+  left: var(--friend-active-center-x);
+  max-width: min(38vw, 34rem);
+  margin: 0;
+  color: rgb(255 255 255 / 0.76);
+  font-family: var(--font-serif-zh);
+  font-size: clamp(0.86rem, 1.04vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.62;
+  text-align: center;
+  text-wrap: balance;
+  transform: translateX(-50%);
+}
+
+.friends-menu-section.is-entered .friend-face-message {
+  animation: friends-face-message-enter 920ms cubic-bezier(0.16, 1, 0.3, 1) 360ms both;
+}
+
+.friend-face-heading.active,
+.friend-face-message.active {
+  opacity: 1;
+}
+
+.friend-face-heading.active,
+.friend-face-message.active {
+  transition:
+    opacity 520ms ease,
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.friend-face-heading.inactive,
+.friend-face-message.inactive {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+@keyframes friends-board-enter {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes friends-canvas-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.965);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes friends-title-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes friends-note-enter {
+  from {
+    opacity: 0;
+    transform: translate(18px, 10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes friends-face-heading-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% + 18px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%);
+  }
+}
+
+@keyframes friends-face-message-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .friends-menu-section:not(.is-entered) .friends-menu-shell,
+  .friends-menu-section.is-entered .friends-menu-shell,
+  .friends-menu-section.is-entered #infinite-grid-menu-canvas,
+  .friends-menu-section.is-entered .infinite-menu-static,
+  .friends-menu-section.is-entered .friend-menu-title,
+  .friends-menu-section.is-entered .friend-menu-note,
+  .friends-menu-section.is-entered .friend-face-heading,
+  .friends-menu-section.is-entered .friend-face-message {
+    animation: none;
+    opacity: 1;
+  }
+
+  .friends-menu-section:not(.is-entered) .friends-menu-shell,
+  .friends-menu-section.is-entered .friends-menu-shell,
+  .friends-menu-section.is-entered #infinite-grid-menu-canvas,
+  .friends-menu-section.is-entered .infinite-menu-static,
+  .friends-menu-section.is-entered .friend-menu-title,
+  .friends-menu-section.is-entered .friend-menu-note {
+    transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .friends-menu-shell {
+    min-height: 520px;
+  }
+
+  .friend-face-heading,
+  .friend-face-message {
+    display: none;
+  }
+}
