@@ -7,6 +7,7 @@ import "@fontsource/inter/latin-600.css";
 import "@fontsource/google-sans-flex/latin-400.css";
 import "@fontsource/google-sans-flex/latin-500.css";
 import "@fontsource/bebas-neue/latin-400.css";
+import "@fontsource/dancing-script/latin-400.css";
 import "@fontsource/dancing-script/latin-600.css";
 import "@fontsource/playfair-display/latin-400.css";
 import "@fontsource/playfair-display/latin-600.css";

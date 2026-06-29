@@ -2,6 +2,7 @@ import useRevealOnScroll from "./hooks/useRevealOnScroll";
 import FloatingStaggeredMenu from "./components/FloatingStaggeredMenu";
 import SiteNav from "./layout/SiteNav";
 import BlogSection from "./sections/BlogSection";
+import DesignSection from "./sections/DesignSection";
 import FriendsMenuSection from "./sections/FriendsMenuSection";
 import Hero from "./sections/Hero";
 import InterestsSection from "./sections/InterestsSection";
@@ -18,6 +19,7 @@ export default function App() {
         <Hero />
         <FriendsMenuSection />
         <WorksSection />
+        <DesignSection />
         <InterestsSection />
         <BlogSection />
       </main>

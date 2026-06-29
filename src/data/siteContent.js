@@ -10,6 +10,7 @@ import { siGithub, siNeteasecloudmusic, siTiktok, siXiaohongshu } from "simple-i
 export const navItems = [
   { label: "About", href: "#about" },
   { label: "Works", href: "#works" },
+  { label: "Design", href: "#design" },
   { label: "Interests", href: "#interests" },
   { label: "Blog", href: "#blog" },
   { label: "Music", href: "#music" },

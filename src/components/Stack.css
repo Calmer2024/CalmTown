@@ -1,0 +1,53 @@
+.rb-stack-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 650px;
+}
+
+.rb-stack-card-rotate,
+.rb-stack-card-rotate-disabled {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.rb-stack-card-rotate {
+  cursor: grab;
+}
+
+.rb-stack-card-rotate-disabled {
+  cursor: pointer;
+}
+
+.rb-stack-card {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #f7f4ee;
+  box-shadow:
+    0 28px 70px rgb(22 19 15 / 0.28),
+    0 2px 0 rgb(255 255 255 / 0.78) inset;
+}
+
+.rb-stack-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-stack-card-rotate,
+  .rb-stack-card-rotate-disabled,
+  .rb-stack-card {
+    transition: none;
+  }
+}
