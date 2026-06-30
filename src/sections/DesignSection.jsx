@@ -262,7 +262,7 @@ export default function DesignSection() {
           <div className="design-creative-grid">
             <FadeIn className="design-music-card-panel" delay={0.12} y={30}>
               <div className="design-panel-copy">
-                <h4>Dream partner cards</h4>
+                <h4>Dream weaver cards</h4>
               </div>
               <DesignStackCards />
             </FadeIn>

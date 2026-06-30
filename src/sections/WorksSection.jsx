@@ -7,9 +7,7 @@ import agentHubVideo from "../../docs/Projects/AgentHub/演示_AgentHub.mp4";
 import agentHubLogo from "../../docs/Projects/AgentHub/agenthub-logo.png";
 import insureSparVideo from "../../docs/Projects/InsureSpar/演示_InsureSpar.mp4";
 import insureSparLogo from "../../docs/Projects/InsureSpar/insurespar_logo.png";
-import museLensOne from "../../docs/Projects/MuseLens/ML1.png";
-import museLensTwo from "../../docs/Projects/MuseLens/ML2.png";
-import museLensThree from "../../docs/Projects/MuseLens/ML3.png";
+import museLensVideo from "../../docs/Projects/MuseLens/演示_MuseLens.mp4";
 import museLensLogo from "../../docs/Projects/MuseLens/MuseLens_logo.png";
 import riversToMountainsVideo from "../../docs/Projects/RiversToMountains/演示_RiversToMountains.mp4";
 import riversToMountainsLogo from "../../docs/Projects/RiversToMountains/RiversToMountains_logo.png";
@@ -45,9 +43,9 @@ const projects = [
       "面向移动端的 AI 图像修图应用，让用户无需学习复杂的提示词工程或编程范式，仅通过自然语言对话，就能精确调用复杂的AI能力，实现“所想即所得”的高效创作体验。",
     stack: ["Flutter", "FastAPI", "PostgreSQL", "pgvector", "MinIO", "Python", "ComfyUI","Riverpod", "Dio"],
     media: {
-      type: "image",
-      images: [museLensOne, museLensTwo, museLensThree],
-      label: "MuseLens interface screenshots",
+      type: "video",
+      src: museLensVideo,
+      label: "MuseLens demo video",
     },
     logo: museLensLogo,
     github: "https://github.com/Calmer2024/MuseLens",
@@ -110,35 +108,19 @@ const projects = [
 ];
 
 function ProjectMedia({ project }) {
-  if (project.media.type === "video") {
-    return (
-      <div className="jack-project-media jack-project-media-video">
-        <video
-          aria-label={project.media.label}
-          src={project.media.src}
-          autoPlay
-          loop
-          muted
-          playsInline
-          controls
-          preload="metadata"
-        >
-          Your browser does not support embedded videos.
-        </video>
-      </div>
-    );
-  }
-
   return (
-    <div className="jack-project-media jack-project-media-gallery" aria-label={project.media.label}>
-      {project.media.images.map((image, imageIndex) => (
-        <img
-          key={image}
-          src={image}
-          alt={`${project.name} screenshot ${imageIndex + 1}`}
-          loading="lazy"
-        />
-      ))}
+    <div className="jack-project-media jack-project-media-video">
+      <video
+        aria-label={project.media.label}
+        src={project.media.src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      >
+        Your browser does not support embedded videos.
+      </video>
     </div>
   );
 }

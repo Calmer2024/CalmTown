@@ -38,6 +38,8 @@ const tracks = [
   },
 ];
 
+const frequencyBars = [0.38, 0.72, 0.52, 0.92, 0.46, 0.84, 0.62, 0.78, 0.42, 0.68, 0.56, 0.88];
+
 export default function InterestMusicPlayer() {
   const audioRef = useRef(null);
   const resumeAfterSwitchRef = useRef(false);
@@ -128,8 +130,8 @@ export default function InterestMusicPlayer() {
   };
 
   return (
-    <div className="interest-player">
-      <div className="interest-coverflow" aria-label="Music cover carousel">
+    <div className={`interest-player${isPlaying ? " is-playing" : ""}`}>
+      <div className="interest-coverflow" aria-label="Music cover carousel" data-active-track={currentTrack.id}>
         {carouselTracks.map((track) => (
           <button
             className={`interest-cover-card is-${track.position}`}
@@ -157,6 +159,18 @@ export default function InterestMusicPlayer() {
         <button type="button" onClick={() => switchTrack(trackIndex + 1)} aria-label="Next track">
           <CaretRight size={22} weight="bold" />
         </button>
+      </div>
+
+      <div className={`interest-frequency-bars${isPlaying ? " is-visible" : ""}`} aria-hidden="true">
+        {frequencyBars.map((bar, index) => (
+          <span
+            key={`${currentTrack.id}-${index}`}
+            style={{
+              "--bar-scale": bar,
+              "--bar-delay": `${index * 74}ms`,
+            }}
+          />
+        ))}
       </div>
 
       <div className="interest-track-list" aria-label="Music track list">

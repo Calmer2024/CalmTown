@@ -23,8 +23,8 @@ export const blogArticles = [
   {
     slug: "xiangtu-china",
     title: "乡土中国正在消失",
-    date: "2026年5月30日",
-    category: "Essay",
+    date: "2026.5.30",
+    category: "Words",
     cover: articleCover,
     excerpt: "对我而言，属于我的乡土中国现在好像只剩下了我的奶奶。",
     body: extractArticleBody(calmTownDocument),

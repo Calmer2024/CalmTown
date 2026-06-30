@@ -19,15 +19,25 @@ export default function InterestsSection() {
                 <p>{interest.summary}</p>
               </div>
               <div className="interest-thumb-grid">
-                {interest.items.map((item) => (
-                  <article className="interest-thumb-row" key={`${interest.title}-${item.title}`}>
-                    <img src={item.image} alt={`${item.title} thumbnail`} loading="lazy" />
-                    <div>
-                      <h4>{item.title}</h4>
-                      <p>{item.text}</p>
-                    </div>
-                  </article>
-                ))}
+                {interest.items.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <article className="interest-thumb-row" key={`${interest.title}-${item.title}`}>
+                      {Icon ? (
+                        <span className="interest-thumb-icon" aria-hidden="true">
+                          <Icon size={28} weight="duotone" />
+                        </span>
+                      ) : (
+                        <img src={item.image} alt={`${item.title} thumbnail`} loading="lazy" />
+                      )}
+                      <div>
+                        <h4>{item.title}</h4>
+                        <p>{item.text}</p>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
               {interest.title === "Music" ? <InterestMusicPlayer /> : null}
             </div>

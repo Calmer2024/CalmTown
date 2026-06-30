@@ -1,0 +1,99 @@
+.magic-bento-hover {
+  --magic-glow-color: 135, 190, 212;
+  --magic-spotlight-size: 360px;
+  --magic-x: 50%;
+  --magic-y: 50%;
+  --magic-border-opacity: 0;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.magic-bento-hover::before,
+.magic-bento-hover::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.magic-bento-hover::before {
+  inset: -1px;
+  z-index: 0;
+  background: radial-gradient(
+    var(--magic-spotlight-size) circle at var(--magic-x) var(--magic-y),
+    rgba(var(--magic-glow-color), 0.22) 0%,
+    rgba(var(--magic-glow-color), 0.1) 24%,
+    transparent 66%
+  );
+  mix-blend-mode: screen;
+  opacity: var(--magic-border-opacity);
+}
+
+.magic-bento-hover::after {
+  inset: 0;
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(
+    calc(var(--magic-spotlight-size) * 0.72) circle at var(--magic-x) var(--magic-y),
+    rgba(var(--magic-glow-color), 0.92) 0%,
+    rgba(var(--magic-glow-color), 0.36) 35%,
+    transparent 70%
+  );
+  opacity: var(--magic-border-opacity);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.magic-bento-hover > * {
+  position: relative;
+  z-index: 1;
+}
+
+.magic-bento-particle,
+.magic-bento-ripple {
+  position: absolute;
+  pointer-events: none;
+}
+
+.magic-bento-particle {
+  z-index: 3;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.magic-bento-particle::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0.16;
+}
+
+.magic-bento-ripple {
+  z-index: 2;
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magic-bento-hover {
+    transition: none;
+    will-change: auto;
+  }
+
+  .magic-bento-hover::before,
+  .magic-bento-hover::after {
+    display: none;
+  }
+}
