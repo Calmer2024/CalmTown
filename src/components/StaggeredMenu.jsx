@@ -21,7 +21,6 @@ export default function StaggeredMenu({
   onMenuClose,
 }) {
   const [open, setOpen] = useState(false);
-  const [textLines, setTextLines] = useState(["Menu", "Close"]);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -29,12 +28,10 @@ export default function StaggeredMenu({
   const plusHRef = useRef(null);
   const plusVRef = useRef(null);
   const iconRef = useRef(null);
-  const textInnerRef = useRef(null);
   const toggleBtnRef = useRef(null);
   const openTlRef = useRef(null);
   const closeTweenRef = useRef(null);
   const spinTweenRef = useRef(null);
-  const textCycleAnimRef = useRef(null);
   const colorTweenRef = useRef(null);
   const busyRef = useRef(false);
 
@@ -45,9 +42,8 @@ export default function StaggeredMenu({
       const plusH = plusHRef.current;
       const plusV = plusVRef.current;
       const icon = iconRef.current;
-      const textInner = textInnerRef.current;
 
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel || !plusH || !plusV || !icon) return;
 
       const preLayers = preContainer ? Array.from(preContainer.querySelectorAll(".sm-prelayer")) : [];
       const offscreen = position === "left" ? -100 : 100;
@@ -57,7 +53,6 @@ export default function StaggeredMenu({
       gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 });
       gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 });
       gsap.set(icon, { rotate: 0, transformOrigin: "50% 50%" });
-      gsap.set(textInner, { yPercent: 0 });
       gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
 
@@ -216,32 +211,13 @@ export default function StaggeredMenu({
       colorTweenRef.current?.kill();
       colorTweenRef.current = gsap.to(button, {
         color: changeMenuColorOnOpen && opening ? openMenuButtonColor : menuButtonColor,
-        delay: 0.18,
+        delay: opening ? 0 : 0.32,
         duration: 0.3,
         ease: "power2.out",
       });
     },
     [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor],
   );
-
-  const animateText = useCallback((opening) => {
-    const inner = textInnerRef.current;
-    if (!inner) return;
-
-    textCycleAnimRef.current?.kill();
-
-    const currentLabel = opening ? "Menu" : "Close";
-    const targetLabel = opening ? "Close" : "Menu";
-    const sequence = [currentLabel, targetLabel, currentLabel, targetLabel, targetLabel];
-
-    setTextLines(sequence);
-    gsap.set(inner, { yPercent: 0 });
-    textCycleAnimRef.current = gsap.to(inner, {
-      yPercent: -80,
-      duration: 0.72,
-      ease: "power4.out",
-    });
-  }, []);
 
   const toggleMenu = useCallback(() => {
     const target = !openRef.current;
@@ -258,8 +234,7 @@ export default function StaggeredMenu({
 
     animateIcon(target);
     animateColor(target);
-    animateText(target);
-  }, [animateColor, animateIcon, animateText, onMenuClose, onMenuOpen, playClose, playOpen]);
+  }, [animateColor, animateIcon, onMenuClose, onMenuOpen, playClose, playOpen]);
 
   const closeMenu = useCallback(() => {
     if (!openRef.current) return;
@@ -270,8 +245,7 @@ export default function StaggeredMenu({
     playClose();
     animateIcon(false);
     animateColor(false);
-    animateText(false);
-  }, [animateColor, animateIcon, animateText, onMenuClose, playClose]);
+  }, [animateColor, animateIcon, onMenuClose, playClose]);
 
   useEffect(() => {
     if (!closeOnClickAway || !open) return undefined;
@@ -326,15 +300,6 @@ export default function StaggeredMenu({
           onClick={toggleMenu}
           type="button"
         >
-          <span className="sm-toggle-textWrap" aria-hidden="true">
-            <span ref={textInnerRef} className="sm-toggle-textInner">
-              {textLines.map((line, index) => (
-                <span className="sm-toggle-line" key={`${line}-${index}`}>
-                  {line}
-                </span>
-              ))}
-            </span>
-          </span>
           <span ref={iconRef} className="sm-icon" aria-hidden="true">
             <span ref={plusHRef} className="sm-icon-line" />
             <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />

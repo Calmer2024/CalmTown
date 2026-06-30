@@ -47,14 +47,16 @@
 }
 
 .sm-toggle {
-  --sm-toggle-width: 4.15rem;
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.56rem;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   min-height: 44px;
-  padding: 0.42rem 0.1rem;
+  padding: 0;
   border: 0;
+  border-radius: 50%;
   background: transparent;
   color: #ffffff;
   cursor: pointer;
@@ -65,35 +67,29 @@
   line-height: 1;
   overflow: visible;
   text-transform: none;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.staggered-menu-wrapper[data-open="true"] .sm-toggle {
+  color: #111111;
+}
+
+.sm-toggle:hover {
+  opacity: 0.86;
+  transform: translateY(-1px);
+}
+
+.sm-toggle:active {
+  transform: translateY(1px) scale(0.92);
 }
 
 .sm-toggle:focus-visible {
   border-radius: 4px;
   outline: 2px solid currentColor;
   outline-offset: 4px;
-}
-
-.sm-toggle-textWrap {
-  position: relative;
-  display: inline-block;
-  width: var(--sm-toggle-width);
-  min-width: var(--sm-toggle-width);
-  height: 1em;
-  overflow: hidden;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.sm-toggle-textInner {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.sm-toggle-line {
-  display: block;
-  height: 1em;
-  line-height: 1;
 }
 
 .sm-icon {
@@ -215,19 +211,46 @@
   display: inline-block;
   padding-right: 1.4em;
   color: #000000;
-  font-family: "Kanit", var(--font-sans);
-  font-size: clamp(3rem, 6vw, 3.85rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
+  font-family: var(--font-nav-display);
+  font-size: clamp(3rem, 6vw, 4.05rem);
+  font-weight: 600;
+  letter-spacing: 0;
   line-height: 0.94;
   text-decoration: none;
   text-transform: uppercase;
-  transition: color 0.25s ease;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sm-panel-item::before {
+  content: "";
+  position: absolute;
+  right: 1.45em;
+  bottom: -0.12em;
+  left: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sm-panel-item:hover,
 .sm-panel-item:focus-visible {
   color: var(--sm-accent, #111111);
+  opacity: 0.76;
+  transform: translateX(0.18em);
+}
+
+.sm-panel-item:hover::before,
+.sm-panel-item:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.sm-panel-item:active {
+  transform: translateX(0.18em) scale(0.985);
 }
 
 .sm-panel-item:focus-visible,
@@ -294,7 +317,8 @@
   text-decoration: none;
   transition:
     color 0.3s ease,
-    opacity 0.3s ease;
+    opacity 0.3s ease,
+    transform 180ms ease;
 }
 
 .sm-socials-list:hover .sm-socials-link,
@@ -309,6 +333,11 @@
 
 .sm-socials-link:hover {
   color: var(--sm-accent, #111111);
+  transform: translateY(-1px);
+}
+
+.sm-socials-link:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 @media (max-width: 1024px) {
