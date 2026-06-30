@@ -12,6 +12,7 @@ import "@fontsource/dancing-script/latin-600.css";
 import "@fontsource/playfair-display/latin-400.css";
 import "@fontsource/playfair-display/latin-600.css";
 import "@fontsource/noto-serif-sc/chinese-simplified-400.css";
+import "@fontsource/noto-serif-sc/chinese-simplified-700.css";
 import "@fontsource/kanit/latin-300.css";
 import "@fontsource/kanit/latin-400.css";
 import "@fontsource/kanit/latin-500.css";

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ChromaGrid from "../components/ChromaGrid";
 import CircularGallery from "../components/CircularGallery";
 import FadeIn from "../components/FadeIn";
@@ -178,62 +178,17 @@ function AigcCircularRow({ title, subtitle, items, bend, font, distortion = true
 
 function PosterTimeline({ items }) {
   const trackRef = useRef(null);
-  const dragRef = useRef({
-    active: false,
-    startX: 0,
-    scrollLeft: 0,
-    nextLeft: 0,
-    frame: 0,
-  });
+  const [activePosterIndex, setActivePosterIndex] = useState(0);
 
-  const stopDrag = (event) => {
+  const playPosterMove = (index) => {
     const track = trackRef.current;
-    const drag = dragRef.current;
+    const nextIndex = index === activePosterIndex ? (index + 1) % items.length : index;
+    const nextSlide = track?.querySelectorAll(".design-poster-slide")[nextIndex];
 
-    drag.active = false;
-    track?.classList.remove("is-dragging");
-
-    if (track && event?.pointerId !== undefined && track.hasPointerCapture?.(event.pointerId)) {
-      track.releasePointerCapture(event.pointerId);
-    }
-  };
-
-  const startDrag = (event) => {
-    if (event.button !== 0) {
-      return;
-    }
-
-    const track = trackRef.current;
-    if (!track) {
-      return;
-    }
-
-    dragRef.current.active = true;
-    dragRef.current.startX = event.clientX;
-    dragRef.current.scrollLeft = track.scrollLeft;
-    dragRef.current.nextLeft = track.scrollLeft;
-    track.classList.add("is-dragging");
-    track.setPointerCapture?.(event.pointerId);
-  };
-
-  const moveDrag = (event) => {
-    const track = trackRef.current;
-    const drag = dragRef.current;
-    if (!track || !drag.active) {
-      return;
-    }
-
-    event.preventDefault();
-    const dragDistance = (event.clientX - drag.startX) * 1.08;
-    drag.nextLeft = drag.scrollLeft - dragDistance;
-
-    if (drag.frame) {
-      return;
-    }
-
-    drag.frame = window.requestAnimationFrame(() => {
-      track.scrollLeft = drag.nextLeft;
-      drag.frame = 0;
+    setActivePosterIndex(nextIndex);
+    track?.scrollTo({
+      left: nextSlide?.offsetLeft ?? 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
     });
   };
 
@@ -242,18 +197,18 @@ function PosterTimeline({ items }) {
       className="design-poster-timeline"
       aria-label="Poster timeline carousel"
       ref={trackRef}
-      onPointerDown={startDrag}
-      onPointerMove={moveDrag}
-      onPointerUp={stopDrag}
-      onPointerCancel={stopDrag}
-      onPointerLeave={stopDrag}
     >
       {items.map((image, index) => (
-        <FadeIn className="design-poster-slide" delay={index * 0.04} y={28} key={image.path}>
-          <figure>
+        <FadeIn
+          className={`design-poster-slide${index === activePosterIndex ? " is-active" : ""}`}
+          delay={index * 0.04}
+          y={28}
+          key={image.path}
+        >
+          <button className="design-poster-button" type="button" onClick={() => playPosterMove(index)}>
             <span>{image.year}</span>
             <img src={image.src} alt={`${image.label} poster`} loading="lazy" draggable="false" />
-          </figure>
+          </button>
         </FadeIn>
       ))}
     </div>
