@@ -32,7 +32,32 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        env:
+          VITE_ASSET_BASE_URL: ${{ vars.R2_PUBLIC_URL }}
+        run: |
+          echo "Asset base: ${VITE_ASSET_BASE_URL:-/CalmTown/}"
+          npm run build
+
+      - name: Upload static assets to Cloudflare R2
+        if: ${{ vars.R2_PUBLIC_URL != '' }}
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          R2_ASSET_PREFIX: ${{ vars.R2_ASSET_PREFIX }}
+        run: |
+          missing=0
+          for name in R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_BUCKET; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is required when R2_PUBLIC_URL is configured."
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+          npm run upload:r2
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

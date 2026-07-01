@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import process from "node:process";
+
+const withTrailingSlash = (value) => {
+  if (!value) return "/CalmTown/";
+  return value.endsWith("/") ? value : `${value}/`;
+};
 
 export default defineConfig({
-  base: "/CalmTown/",
+  base: withTrailingSlash(process.env.VITE_ASSET_BASE_URL),
   plugins: [react()],
   build: {
     rollupOptions: {
