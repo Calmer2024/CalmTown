@@ -96,8 +96,8 @@ export const heroFluidColors = ["#fff7df", "#f2a565", "#87bed4", "#ffffff"];
 export const friendMenuItems = [
   {
     title: "bjHH",
-    subtitle: "Design witness",
-    description: "“你总能把混乱的想法整理成一个能被触摸的界面。”",
+    subtitle: "一个有趣的灵魂",
+    description: "“哇塞，我总算抽到金卡了。”",
     image: publicAsset("friends/bjhh.jpg"),
     alt: "小野留言的灰度照片",
   },

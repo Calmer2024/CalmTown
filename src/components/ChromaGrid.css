@@ -217,3 +217,47 @@
     transform: scale(1.7);
   }
 }
+
+@media (max-width: 900px) {
+  .rb-chroma-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .rb-chroma-image-wrap {
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 600px) {
+  .rb-chroma-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rb-chroma-image-wrap {
+    min-height: clamp(260px, 88vw, 360px);
+    padding: 0.6rem;
+  }
+
+  .rb-chroma-image-wrap img {
+    max-height: clamp(250px, 82vw, 340px);
+  }
+
+  .rb-chroma-info {
+    gap: 0.75rem;
+    padding: 0.78rem 0.82rem 0.9rem;
+  }
+
+  .rb-chroma-info h3 {
+    font-size: clamp(2.1rem, 12vw, 2.7rem);
+  }
+
+  .rb-chroma-actions button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rb-chroma-overlay {
+    display: none;
+  }
+}

@@ -72,3 +72,17 @@
   outline: 2px solid rgb(255 255 255 / 0.9);
   outline-offset: 4px;
 }
+
+@media (max-width: 760px) {
+  .rb-circular-gallery-preview {
+    justify-content: flex-start;
+    gap: 0.7rem;
+    padding-inline: 0.5rem;
+    overflow: hidden;
+  }
+
+  .rb-circular-gallery-preview img {
+    width: clamp(104px, 33vw, 150px);
+    border-radius: 14px;
+  }
+}

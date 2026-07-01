@@ -2486,6 +2486,7 @@ canvas {
 .design-poster-block {
   display: grid;
   gap: 3rem;
+  min-width: 0;
 }
 
 .design-block-heading {
@@ -2517,10 +2518,12 @@ canvas {
   display: grid;
   gap: 0.52rem;
   justify-items: center;
+  max-width: 100%;
   text-align: center;
 }
 
 .design-work-title {
+  max-width: 100%;
   margin: 0;
   color: var(--design-ink);
   font-family: var(--font-poster-display);
@@ -2530,6 +2533,7 @@ canvas {
   line-height: 0.88;
   text-align: center;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .design-work-subtitle {
@@ -2550,11 +2554,13 @@ canvas {
 .design-bluecomic-grid {
   position: relative;
   width: 100%;
+  min-width: 0;
 }
 
 .design-circular-row {
   position: relative;
   width: min(100%, 1240px);
+  min-width: 0;
   margin-inline: auto;
   padding: 0;
   background: transparent;
@@ -2575,6 +2581,9 @@ canvas {
   display: grid;
   grid-template-columns: minmax(0, 1.42fr) minmax(390px, 0.82fr);
   gap: clamp(2rem, 4vw, 4.2rem);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   align-items: stretch;
 }
 
@@ -2582,6 +2591,9 @@ canvas {
   position: relative;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 650px;
   overflow: visible;
   padding: 1rem;
@@ -2644,6 +2656,9 @@ canvas {
 
 .design-clover-row {
   display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 650px;
   align-items: center;
   justify-items: center;
@@ -3200,6 +3215,28 @@ canvas {
     max-height: clamp(280px, 48vw, 520px);
   }
 
+  .jack-design {
+    padding-inline: clamp(1rem, 3vw, 1.6rem);
+  }
+
+  .design-shell {
+    gap: clamp(4rem, 7vw, 5.5rem);
+  }
+
+  .design-creative-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .design-music-card-panel,
+  .design-clover-row {
+    min-height: clamp(480px, 68vw, 620px);
+  }
+
+  .design-stack-stage {
+    width: min(100%, 680px);
+    margin-inline: auto;
+  }
+
   .interest-player {
     grid-template-columns: 1fr;
   }
@@ -3416,6 +3453,110 @@ canvas {
     max-height: 320px;
   }
 
+  .jack-design {
+    margin-top: clamp(-4rem, -10vw, -2.5rem);
+    padding: clamp(3.25rem, 10vw, 4.5rem) 1rem clamp(4.5rem, 12vw, 6rem);
+    border-radius: 34px 34px 0 0;
+    background-size:
+      auto,
+      44px 44px,
+      44px 44px,
+      auto;
+  }
+
+  .design-shell {
+    width: 100%;
+    gap: clamp(3.2rem, 10vw, 4.5rem);
+    margin-top: 1.4rem;
+  }
+
+  .design-aigc-block,
+  .design-creative-block,
+  .design-poster-block {
+    gap: clamp(2rem, 7vw, 3rem);
+  }
+
+  .design-block-heading h3 {
+    font-size: clamp(2.4rem, 16vw, 4rem);
+    line-height: 0.9;
+  }
+
+  .design-work-title {
+    max-width: min(100%, 12ch);
+    font-size: clamp(2.7rem, 13vw, 4.1rem);
+    line-height: 0.9;
+  }
+
+  .design-work-subtitle {
+    max-width: 26ch;
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  .design-bluepain-showcase,
+  .design-circular-row,
+  .design-circular-row-spaced {
+    width: 100%;
+  }
+
+  .design-circular-row-spaced {
+    margin-top: 2.1rem;
+  }
+
+  .design-circular-stage {
+    min-height: clamp(380px, 112vw, 520px);
+  }
+
+  .design-creative-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 8vw, 3rem);
+  }
+
+  .design-music-card-panel {
+    min-height: clamp(390px, 112vw, 560px);
+    overflow: hidden;
+    padding: 0.75rem;
+    border-radius: 24px;
+  }
+
+  .design-panel-copy {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0.25rem 0.3rem 0;
+  }
+
+  .design-panel-copy h4 {
+    font-size: clamp(2rem, 14vw, 3.1rem);
+  }
+
+  .design-stack-stage {
+    width: min(100%, 520px);
+    margin: 0.5rem auto 0;
+  }
+
+  .design-clover-row {
+    min-height: clamp(390px, 112vw, 560px);
+  }
+
+  .design-clover-card-text {
+    top: 1rem;
+    left: 1rem;
+    max-width: calc(100% - 2rem);
+    font-size: clamp(0.88rem, 4.2vw, 1.08rem);
+  }
+
+  .design-poster-slide {
+    flex-basis: min(78vw, 300px);
+  }
+
+  .design-poster-slide span {
+    font-size: clamp(1.6rem, 8vw, 2.15rem);
+  }
+
+  .design-poster-slide img {
+    height: clamp(280px, 92vw, 420px);
+  }
+
 }
 
 @media (max-width: 420px) {
@@ -3435,6 +3576,22 @@ canvas {
   .jack-live-button {
     width: 100%;
     max-width: 280px;
+  }
+
+  .jack-design {
+    padding-inline: 0.75rem;
+  }
+
+  .design-circular-stage {
+    min-height: 360px;
+  }
+
+  .design-work-title {
+    font-size: clamp(2.25rem, 15vw, 3.5rem);
+  }
+
+  .design-poster-slide {
+    flex-basis: min(82vw, 280px);
   }
 }
 

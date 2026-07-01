@@ -9,8 +9,9 @@
 .staggered-menu-wrapper.fixed-wrapper {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
 }
 
@@ -346,6 +347,29 @@
     right: 0;
     left: 0;
     width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .staggered-menu-header {
+    padding: 0.9rem;
+  }
+
+  .staggered-menu-panel {
+    padding: clamp(4.6rem, 18vw, 5.6rem) 1.15rem 1.5rem;
+  }
+
+  .sm-panel-item {
+    font-size: clamp(2.55rem, 14vw, 3.3rem);
+  }
+
+  .sm-panel-list[data-numbering] .sm-panel-item::after {
+    right: 2.25em;
+    font-size: 14px;
+  }
+
+  .sm-socials-link {
+    font-size: 0.98rem;
   }
 }
 
