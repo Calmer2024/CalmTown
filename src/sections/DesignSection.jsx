@@ -150,7 +150,17 @@ function DesignStackCards() {
   );
 }
 
-function AigcCircularRow({ title, subtitle, items, bend, font, distortion = true, enableDrag = true, className = "" }) {
+function AigcCircularRow({
+  title,
+  subtitle,
+  items,
+  bend,
+  font,
+  distortion = true,
+  enableDrag = true,
+  preloadRenderer = false,
+  className = "",
+}) {
   return (
     <FadeIn className={`design-aigc-work design-circular-row ${className}`.trim()} delay={0.1} y={30}>
       <div className="design-work-heading">
@@ -169,6 +179,7 @@ function AigcCircularRow({ title, subtitle, items, bend, font, distortion = true
           showText={false}
           distortion={distortion}
           enableDrag={enableDrag}
+          preloadRenderer={preloadRenderer}
           label={`${title} gallery`}
         />
       </div>
@@ -251,6 +262,7 @@ export default function DesignSection() {
             bend={-2.8}
             font={'500 28px "Google Sans Flex"'}
             distortion={false}
+            preloadRenderer
           />
         </div>
 

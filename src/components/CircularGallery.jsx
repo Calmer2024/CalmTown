@@ -26,8 +26,12 @@ function autoBind(instance) {
 async function resolveFont(font) {
   if (document.fonts?.load) {
     try {
-      await document.fonts.load(font);
-      await document.fonts.ready;
+      await Promise.race([
+        document.fonts.load(font),
+        new Promise((resolve) => {
+          window.setTimeout(resolve, 700);
+        }),
+      ]);
     } catch {
       return font;
     }
@@ -365,12 +369,14 @@ class Media {
 }
 
 class CircularGalleryApp {
-  constructor(container, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, showText, distortion, enableDrag }) {
+  constructor(container, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, showText, distortion, enableDrag, onReady }) {
     autoBind(this);
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.enableDrag = enableDrag;
     this.hasDistortion = distortion;
+    this.onReady = onReady;
+    this.ready = false;
     this.textureCache = new Map();
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck, 200);
@@ -547,6 +553,11 @@ class CircularGalleryApp {
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
 
+    if (!this.ready) {
+      this.ready = true;
+      this.onReady?.();
+    }
+
     const isSettling = Math.abs(this.scroll.target - this.scroll.current) > 0.001;
     if (this.hasDistortion || this.isDown || isSettling) {
       this.requestRender();
@@ -606,16 +617,18 @@ export default function CircularGallery({
   showText = true,
   distortion = true,
   enableDrag = true,
+  preloadRenderer = false,
   label = "Circular image gallery",
 }) {
   const containerRef = useRef(null);
   const [shouldRender, setShouldRender] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     const runWarmup = () => {
       warmImages(items).finally(() => {
-        if (!cancelled && !("IntersectionObserver" in window)) {
+        if (!cancelled && (preloadRenderer || !("IntersectionObserver" in window))) {
           setShouldRender(true);
         }
       });
@@ -634,7 +647,7 @@ export default function CircularGallery({
       cancelled = true;
       window.clearTimeout(timeout);
     };
-  }, [items]);
+  }, [items, preloadRenderer]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -647,9 +660,12 @@ export default function CircularGallery({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setShouldRender(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setShouldRender(true);
+          observer.disconnect();
+        }
       },
-      { rootMargin: "1400px 0px", threshold: 0.01 },
+      { rootMargin: "4200px 0px", threshold: 0.01 },
     );
 
     observer.observe(container);
@@ -667,6 +683,7 @@ export default function CircularGallery({
       };
     }
 
+    setIsReady(false);
     resolveFont(font).then((resolvedFont) => {
       if (!mounted || !containerRef.current) {
         return;
@@ -683,6 +700,11 @@ export default function CircularGallery({
         showText,
         distortion,
         enableDrag,
+        onReady: () => {
+          if (mounted) {
+            setIsReady(true);
+          }
+        },
       });
     });
 
@@ -692,14 +714,35 @@ export default function CircularGallery({
     };
   }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, showText, distortion, enableDrag, shouldRender]);
 
+  const previewItems = items.slice(0, 7);
+
   return (
     <div
-      className="rb-circular-gallery"
+      className={`rb-circular-gallery${isReady ? " is-ready" : ""}`}
       ref={containerRef}
       tabIndex={0}
       role="region"
       aria-label={label}
       data-enable-drag={enableDrag ? "true" : "false"}
-    />
+      data-gallery-ready={isReady ? "true" : "false"}
+      data-gallery-rendered={shouldRender ? "true" : "false"}
+    >
+      <div className="rb-circular-gallery-preview" aria-hidden="true">
+        {previewItems.map((item, index) => {
+          const offset = index - (previewItems.length - 1) / 2;
+          return (
+            <img
+              src={item.image}
+              alt=""
+              decoding="async"
+              draggable="false"
+              loading={preloadRenderer ? "eager" : "lazy"}
+              style={{ "--gallery-preview-offset": offset }}
+              key={`${item.image}-${index}`}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 }
