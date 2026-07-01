@@ -187,7 +187,7 @@ export default function WorksSection() {
   return (
     <section className="portfolio-section jack-projects" id="works">
       <FadeIn>
-        <SectionHeading className="jack-section-heading jack-project-heading" id="works-title" number="01" title="Works" />
+        <SectionHeading className="jack-section-heading jack-project-heading" id="works-title" number="02" title="Works" />
       </FadeIn>
       <ScrollStack
         className="jack-project-stack"

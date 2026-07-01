@@ -219,7 +219,7 @@ export default function DesignSection() {
   return (
     <section className="portfolio-section jack-design" id="design">
       <FadeIn>
-        <SectionHeading className="jack-section-heading jack-design-heading" id="design-title" number="02" title="Design" />
+        <SectionHeading className="jack-section-heading jack-design-heading" id="design-title" number="03" title="Design" />
       </FadeIn>
 
       <div className="design-shell">

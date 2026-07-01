@@ -6,7 +6,7 @@ export default function FooterSection() {
   return (
     <footer className="portfolio-section jack-footer" id="continued">
       <FadeIn>
-        <SectionHeading className="jack-section-heading jack-footer-heading" id="continued-title" number="05" title="Thanks" />
+        <SectionHeading className="jack-section-heading jack-footer-heading" id="continued-title" number="06" title="Thanks" />
       </FadeIn>
 
       <FadeIn delay={0.12} y={28}>

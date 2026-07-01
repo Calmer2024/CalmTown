@@ -1,5 +1,22 @@
 import { Bed, CloudMoon, MapTrifold, MoonStars } from "@phosphor-icons/react";
-import { siGithub, siNeteasecloudmusic, siTiktok, siXiaohongshu } from "simple-icons";
+import {
+  siClaude,
+  siCplusplus,
+  siDocker,
+  siFastapi,
+  siGithub,
+  siLangchain,
+  siMysql,
+  siNeteasecloudmusic,
+  siOpenaigym,
+  siPython,
+  siReact,
+  siTiktok,
+  siTypescript,
+  siUbuntu,
+  siUnrealengine,
+  siXiaohongshu,
+} from "simple-icons";
 import asenImage from "../../docs/Interests/Music/音乐人/ASEN.jpg";
 import drakeImage from "../../docs/Interests/Music/音乐人/Drake.jpg";
 import galiImage from "../../docs/Interests/Music/音乐人/GALI.jpg";
@@ -23,6 +40,21 @@ export const navItems = [
   { label: "Design", href: "#design" },
   { label: "Interests", href: "#interests" },
   { label: "Blog", href: "#blog" },
+];
+
+export const techStackItems = [
+  { label: "Python", icon: siPython },
+  { label: "C++", icon: siCplusplus },
+  { label: "JS/TS", icon: siTypescript },
+  { label: "React", icon: siReact },
+  { label: "FastAPI", icon: siFastapi },
+  { label: "Claude", icon: siClaude },
+  { label: "Codex", icon: siOpenaigym },
+  { label: "Docker", icon: siDocker },
+  { label: "LangChain", icon: siLangchain },
+  { label: "MySQL", icon: siMysql },
+  { label: "Ubuntu", icon: siUbuntu },
+  { label: "UE5", icon: siUnrealengine, color: "#f7f3e9", glow: "#f7f3e9" },
 ];
 
 export const socialLinks = [

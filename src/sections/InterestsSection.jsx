@@ -7,7 +7,7 @@ export default function InterestsSection() {
   return (
     <section className="portfolio-section jack-services" id="interests">
       <FadeIn>
-        <SectionHeading className="jack-section-heading" id="interests-title" number="03" title="Interests" />
+        <SectionHeading className="jack-section-heading" id="interests-title" number="04" title="Interests" />
       </FadeIn>
       <div className="jack-service-list">
         {interests.map((interest, index) => (

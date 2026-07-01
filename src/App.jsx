@@ -9,6 +9,7 @@ import FooterSection from "./sections/FooterSection";
 import FriendsMenuSection from "./sections/FriendsMenuSection";
 import Hero from "./sections/Hero";
 import InterestsSection from "./sections/InterestsSection";
+import TechStackSection from "./sections/TechStackSection";
 import WorksSection from "./sections/WorksSection";
 
 function getHashRoute() {
@@ -50,6 +51,7 @@ export default function App() {
         <main>
           <Hero />
           <FriendsMenuSection />
+          <TechStackSection />
           <WorksSection />
           <DesignSection />
           <InterestsSection />
