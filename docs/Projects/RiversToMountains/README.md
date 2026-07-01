@@ -117,7 +117,7 @@ npm run dev
 ```
 /public/
   /images/        # 静态图片 (logo, posters, clouds)
-  /videos/        # 背景视频 (hero, companion, slides)
+  /media/         # 展示媒体和页面素材
   /music/         # 音频文件 (story-theme.mp3)
 /src/
   /components/    # 可复用组件 (Header, Button, StoryControls, ChatDialog...)

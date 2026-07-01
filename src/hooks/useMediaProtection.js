@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const PROTECTED_MEDIA_SELECTOR = "img, video, canvas";
+const PROTECTED_MEDIA_SELECTOR = "img, canvas";
 
 function isProtectedMediaTarget(target) {
   return target instanceof Element && target.closest(PROTECTED_MEDIA_SELECTOR);
