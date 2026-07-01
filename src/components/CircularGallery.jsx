@@ -68,6 +68,23 @@ function createTextTexture(gl, text, font = "bold 30px sans-serif", color = "#ff
   return { texture, width: canvas.width, height: canvas.height };
 }
 
+function shouldUseAnonymousCors(src) {
+  try {
+    return new URL(src, window.location.href).origin !== window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
+function prepareImageElement(img, src) {
+  img.decoding = "async";
+  img.draggable = false;
+
+  if (shouldUseAnonymousCors(src)) {
+    img.crossOrigin = "anonymous";
+  }
+}
+
 function getTextureResource(cache, gl, image) {
   const cached = cache.get(image);
   if (cached) {
@@ -78,6 +95,9 @@ function getTextureResource(cache, gl, image) {
     texture: new Texture(gl, { generateMipmaps: false }),
     imageSizes: [1, 1],
     programs: new Set(),
+    readyCallbacks: new Set(),
+    isSettled: false,
+    failed: false,
   };
 
   resource.attach = (program) => {
@@ -85,15 +105,36 @@ function getTextureResource(cache, gl, image) {
     program.uniforms.uImageSizes.value = resource.imageSizes;
   };
 
+  resource.onReady = (callback) => {
+    if (resource.isSettled) {
+      callback(resource);
+      return () => {};
+    }
+
+    resource.readyCallbacks.add(callback);
+    return () => resource.readyCallbacks.delete(callback);
+  };
+
+  resource.markSettled = () => {
+    resource.isSettled = true;
+    resource.readyCallbacks.forEach((callback) => callback(resource));
+    resource.readyCallbacks.clear();
+  };
+
   const img = new Image();
-  img.decoding = "async";
-  img.draggable = false;
+  prepareImageElement(img, image);
   img.onload = () => {
     resource.texture.image = img;
+    resource.texture.needsUpdate = true;
     resource.imageSizes = [img.naturalWidth, img.naturalHeight];
     resource.programs.forEach((program) => {
       program.uniforms.uImageSizes.value = resource.imageSizes;
     });
+    resource.markSettled();
+  };
+  img.onerror = () => {
+    resource.failed = true;
+    resource.markSettled();
   };
   img.src = image;
 
@@ -107,7 +148,7 @@ function warmImages(items) {
   return Promise.all(
     urls.map((url) => new Promise((resolve) => {
       const img = new Image();
-      img.decoding = "async";
+      prepareImageElement(img, url);
       img.onload = () => {
         if (img.decode) {
           img.decode().then(resolve).catch(resolve);
@@ -207,6 +248,7 @@ class Media {
     this.showText = showText;
     this.distortion = distortion;
     this.textureCache = textureCache;
+    this.textureResource = null;
     this.createShader();
     this.createMesh();
     if (this.showText && this.text) {
@@ -217,6 +259,7 @@ class Media {
 
   createShader() {
     const textureResource = getTextureResource(this.textureCache, this.gl, this.image);
+    this.textureResource = textureResource;
     this.program = new Program(this.gl, {
       depthTest: false,
       depthWrite: false,
@@ -377,6 +420,8 @@ class CircularGalleryApp {
     this.hasDistortion = distortion;
     this.onReady = onReady;
     this.ready = false;
+    this.texturesReady = false;
+    this.textureReadyDisposers = [];
     this.textureCache = new Map();
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck, 200);
@@ -386,6 +431,7 @@ class CircularGalleryApp {
     this.onResize();
     this.createGeometry();
     this.createMedias(items, bend, textColor, borderRadius, font, showText, distortion);
+    this.watchTextures();
     this.addEventListeners();
     this.requestRender();
   }
@@ -443,6 +489,31 @@ class CircularGalleryApp {
         showText,
         distortion,
         textureCache: this.textureCache,
+      })
+    ));
+  }
+
+  watchTextures() {
+    const resources = [...new Set(this.medias.map((media) => media.textureResource).filter(Boolean))];
+    let pending = resources.filter((resource) => !resource.isSettled).length;
+
+    if (!pending) {
+      this.texturesReady = true;
+      return;
+    }
+
+    this.textureReadyDisposers = resources.map((resource) => (
+      resource.onReady(() => {
+        this.requestRender();
+
+        if (pending > 0) {
+          pending -= 1;
+        }
+
+        if (pending === 0) {
+          this.texturesReady = true;
+          this.requestRender();
+        }
       })
     ));
   }
@@ -553,7 +624,7 @@ class CircularGalleryApp {
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
 
-    if (!this.ready) {
+    if (!this.ready && this.texturesReady) {
       this.ready = true;
       this.onReady?.();
     }
@@ -602,6 +673,8 @@ class CircularGalleryApp {
     }
 
     this.textureCache?.clear();
+    this.textureReadyDisposers?.forEach((dispose) => dispose());
+    this.textureReadyDisposers = [];
     this.gl?.getExtension("WEBGL_lose_context")?.loseContext();
   }
 }
@@ -734,6 +807,7 @@ export default function CircularGallery({
             <img
               src={item.image}
               alt=""
+              crossOrigin="anonymous"
               decoding="async"
               draggable="false"
               loading={preloadRenderer ? "eager" : "lazy"}

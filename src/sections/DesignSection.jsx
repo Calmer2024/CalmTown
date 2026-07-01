@@ -162,7 +162,7 @@ function AigcCircularRow({
   className = "",
 }) {
   return (
-    <FadeIn className={`design-aigc-work design-circular-row ${className}`.trim()} delay={0.1} y={30}>
+    <div className={`design-aigc-work design-circular-row ${className}`.trim()}>
       <div className="design-work-heading">
         <h4 className="design-work-title">{title}</h4>
         <p className="design-work-subtitle">{subtitle}</p>
@@ -183,7 +183,7 @@ function AigcCircularRow({
           label={`${title} gallery`}
         />
       </div>
-    </FadeIn>
+    </div>
   );
 }
 
