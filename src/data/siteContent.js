@@ -34,6 +34,8 @@ import banlattePodcastImage from "../../docs/Interests/Podcast/半拿铁.jpg";
 import feihuaPodcastImage from "../../docs/Interests/Podcast/肥话连篇.jpg";
 import yilePodcastImage from "../../docs/Interests/Podcast/怡楽播客.jpg";
 
+const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 export const navItems = [
   { label: "About", href: "#about" },
   { label: "Works", href: "#works" },
@@ -96,70 +98,70 @@ export const friendMenuItems = [
     title: "bjHH",
     subtitle: "Design witness",
     description: "“你总能把混乱的想法整理成一个能被触摸的界面。”",
-    image: "/friends/bjhh.jpg",
+    image: publicAsset("friends/bjhh.jpg"),
     alt: "小野留言的灰度照片",
   },
   {
     title: "长木日",
     subtitle: "职业音乐人，业余写代码",
     description: "“卡老师的世界总是充满色彩。”",
-    image: "/friends/cmr.jpg",
+    image: publicAsset("friends/cmr.jpg"),
     alt: "长木日",
   },
   {
     title: "kk34",
     subtitle: "我不当Curfur好久了",
     description: "“那些打不死我的一直在打我。”",
-    image: "/friends/curfur.jpg",
+    image: publicAsset("friends/curfur.jpg"),
     alt: "kk34",
   },
   {
     title: "Ratiocc",
     subtitle: "已飞0国|imsb|湖北留子",
     description: "我学计算机不小心学成图灵了怎么办，到时候奖项也用我名字命名吗",
-    image: "/friends/czh.jpg",
+    image: publicAsset("friends/czh.jpg"),
     alt: "Ratiocc",
   },
   {
     title: "hammer",
     subtitle: "我背不完",
     description: "“这个人怎么总是有这么多奇思妙想？”",
-    image: "/friends/hammer.jpg",
+    image: publicAsset("friends/hammer.jpg"),
     alt: "hammer",
   },
   {
     title: "豆乳玉麒麟",
     subtitle: "形而上学不行退学",
     description: "“跟你八竿子打不着的人出现在你的生活中就是为了打你八竿子。”",
-    image: "/friends/xjh.jpg",
+    image: publicAsset("friends/xjh.jpg"),
     alt: "豆乳玉麒麟",
   },
   {
     title: "Calmer",
     subtitle: "Author",
     description: "“更冷静一点。”",
-    image: "/friends/calmer.jpg",
+    image: publicAsset("friends/calmer.jpg"),
     alt: "Calmer",
   },
   {
     title: "ShadowK",
     subtitle: "唯神",
     description: "“你见过神吗？”",
-    image: "/friends/shadowk.jpg",
+    image: publicAsset("friends/shadowk.jpg"),
     alt: "ShadowK",
   },
   {
     title: "波罗的海海主",
     subtitle: "(˶‾᷄ ⁻̫ ‾᷅˵)",
     description: "“Maの最も煩いは装Bの人”",
-    image: "/friends/xc.jpg",
+    image: publicAsset("friends/xc.jpg"),
     alt: "波罗的海海主",
   },
   {
     title: "hammer",
     subtitle: "从小当到大",
     description: "“好想过一轮没有考试的春夏秋冬”",
-    image: "/friends/hammer.jpg",
+    image: publicAsset("friends/hammer.jpg"),
     alt: "hammer",
   },
 ];

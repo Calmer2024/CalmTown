@@ -69,7 +69,7 @@ export default function TechStackSection() {
         <FadeIn className="tech-stack-character-wrap" delay={0.14} x={28} y={18}>
           <img
             className="tech-stack-character"
-            src="/calmer-stand.png"
+            src={`${import.meta.env.BASE_URL}calmer-stand.png`}
             alt="Calmer standing character"
             width="1024"
             height="1536"

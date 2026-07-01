@@ -13,7 +13,7 @@ export default function FooterSection() {
         <MagicBentoHover className="jack-footer-panel" glowColor="135, 190, 212" particleCount={8}>
           <img
             className="jack-footer-avatar"
-            src="/calmer-q.png"
+            src={`${import.meta.env.BASE_URL}calmer-q.png`}
             alt="Calmer Q character"
             width="960"
             height="960"
