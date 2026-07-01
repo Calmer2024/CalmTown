@@ -112,6 +112,7 @@ function ProjectMedia({ project }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -120,7 +121,7 @@ function ProjectMedia({ project }) {
 
     if (!("IntersectionObserver" in window)) {
       setHasLoaded(true);
-      video.play().catch(() => {});
+      setIsInView(true);
       return undefined;
     }
 
@@ -128,13 +129,14 @@ function ProjectMedia({ project }) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setHasLoaded(true);
-          video.play().catch(() => {});
+          setIsInView(true);
           return;
         }
 
+        setIsInView(false);
         video.pause();
       },
-      { rootMargin: "220px 0px", threshold: 0.18 },
+      { rootMargin: "320px 0px", threshold: 0.12 },
     );
 
     observer.observe(container);
@@ -144,27 +146,45 @@ function ProjectMedia({ project }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!hasLoaded || !video) return;
+    if (!hasLoaded || !isInView || !video) return undefined;
 
-    video.load();
-    video.play().catch(() => {});
-  }, [hasLoaded]);
+    let cancelled = false;
+    const playVideo = () => {
+      if (cancelled || !isInView) return;
+      video.play().catch(() => {});
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      playVideo();
+    } else {
+      video.load();
+      video.addEventListener("loadeddata", playVideo, { once: true });
+      video.addEventListener("canplay", playVideo, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      video.removeEventListener("loadeddata", playVideo);
+      video.removeEventListener("canplay", playVideo);
+    };
+  }, [hasLoaded, isInView]);
 
   return (
     <div className="jack-project-media jack-project-media-video" ref={containerRef}>
       <video
         ref={videoRef}
         aria-label={project.media.label}
+        src={hasLoaded ? project.media.src : undefined}
         loop
         muted
         playsInline
-        preload="none"
+        preload={hasLoaded ? "metadata" : "none"}
+        poster={project.logo}
         controlsList="nodownload noplaybackrate noremoteplayback"
         disablePictureInPicture
         disableRemotePlayback
         draggable={false}
       >
-        {hasLoaded ? <source src={project.media.src} type="video/mp4" /> : null}
         Your browser does not support embedded videos.
       </video>
     </div>

@@ -32,6 +32,25 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const revealHome = () => {
+      document.querySelectorAll("#home [data-reveal]").forEach((target) => {
+        target.classList.add("is-visible");
+      });
+    };
+
+    const handleBackToHome = () => {
+      setRoute("");
+      revealHome();
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    };
+
+    window.addEventListener("calmtown:back-to-home", handleBackToHome);
+    return () => window.removeEventListener("calmtown:back-to-home", handleBackToHome);
+  }, []);
+
+  useEffect(() => {
     if (isBlogArticle) {
       window.scrollTo({ top: 0, behavior: "auto" });
       return;
@@ -40,6 +59,11 @@ export default function App() {
     if (!route) return;
     window.requestAnimationFrame(() => {
       document.getElementById(route)?.scrollIntoView({ block: "start" });
+      if (route === "home") {
+        document.querySelectorAll("#home [data-reveal]").forEach((target) => {
+          target.classList.add("is-visible");
+        });
+      }
     });
   }, [isBlogArticle, route]);
 

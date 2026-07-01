@@ -53,11 +53,10 @@ export default function StaggeredMenu({
       gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 });
       gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 });
       gsap.set(icon, { rotate: 0, transformOrigin: "50% 50%" });
-      gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
 
     return () => ctx.revert();
-  }, [menuButtonColor, position]);
+  }, [position]);
 
   const buildOpenTimeline = useCallback(() => {
     const panel = panelRef.current;
@@ -218,6 +217,21 @@ export default function StaggeredMenu({
     },
     [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor],
   );
+
+  useEffect(() => {
+    const button = toggleBtnRef.current;
+    if (!button || (changeMenuColorOnOpen && openRef.current)) return undefined;
+
+    colorTweenRef.current?.kill();
+    colorTweenRef.current = gsap.to(button, {
+      color: menuButtonColor,
+      duration: 0.42,
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+
+    return undefined;
+  }, [changeMenuColorOnOpen, menuButtonColor]);
 
   const toggleMenu = useCallback(() => {
     const target = !openRef.current;

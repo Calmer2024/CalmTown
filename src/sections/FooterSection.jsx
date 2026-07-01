@@ -3,6 +3,14 @@ import MagicBentoHover from "../components/MagicBentoHover";
 import SectionHeading from "../components/SectionHeading";
 
 export default function FooterSection() {
+  const handleBackToHome = (event) => {
+    event.preventDefault();
+    if (window.location.hash) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    }
+    window.dispatchEvent(new Event("calmtown:back-to-home"));
+  };
+
   return (
     <footer className="portfolio-section jack-footer" id="continued">
       <FadeIn>
@@ -22,7 +30,7 @@ export default function FooterSection() {
           />
           <p>THANK YOU FOR VISITING AND HAVE A GREAT DAY</p>
           <h2>TO BE CONTINUED</h2>
-          <a className="jack-footer-link" href="#home">
+          <a className="jack-footer-link" href="#home" onClick={handleBackToHome}>
             BACK TO TOP
           </a>
         </MagicBentoHover>

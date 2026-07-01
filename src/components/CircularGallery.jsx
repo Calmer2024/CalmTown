@@ -97,6 +97,26 @@ function getTextureResource(cache, gl, image) {
   return resource;
 }
 
+function warmImages(items) {
+  const urls = [...new Set(items.map((item) => item.image).filter(Boolean))];
+
+  return Promise.all(
+    urls.map((url) => new Promise((resolve) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = () => {
+        if (img.decode) {
+          img.decode().then(resolve).catch(resolve);
+          return;
+        }
+        resolve();
+      };
+      img.onerror = resolve;
+      img.src = url;
+    })),
+  );
+}
+
 class Title {
   constructor({ gl, plane, text, textColor, font }) {
     autoBind(this);
@@ -592,6 +612,31 @@ export default function CircularGallery({
   const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+    const runWarmup = () => {
+      warmImages(items).finally(() => {
+        if (!cancelled && !("IntersectionObserver" in window)) {
+          setShouldRender(true);
+        }
+      });
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(runWarmup, { timeout: 1500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback?.(idleId);
+      };
+    }
+
+    const timeout = window.setTimeout(runWarmup, 250);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, [items]);
+
+  useEffect(() => {
     const container = containerRef.current;
     if (!container) return undefined;
 
@@ -604,7 +649,7 @@ export default function CircularGallery({
       ([entry]) => {
         setShouldRender(entry.isIntersecting);
       },
-      { rootMargin: "360px 0px", threshold: 0.01 },
+      { rootMargin: "1400px 0px", threshold: 0.01 },
     );
 
     observer.observe(container);
