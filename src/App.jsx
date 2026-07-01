@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useMediaProtection from "./hooks/useMediaProtection";
 import useRevealOnScroll from "./hooks/useRevealOnScroll";
 import FloatingStaggeredMenu from "./components/FloatingStaggeredMenu";
 import SiteNav from "./layout/SiteNav";
@@ -19,6 +20,7 @@ function getHashRoute() {
 
 export default function App() {
   useRevealOnScroll();
+  useMediaProtection();
   const [route, setRoute] = useState(getHashRoute);
   const isBlogArticle = route.startsWith("blog/");
   const blogSlug = route.replace("blog/", "");

@@ -109,6 +109,13 @@ export const friendMenuItems = [
     alt: "长木日",
   },
   {
+    title: "Haaaa",
+    subtitle: "RUBY",
+    description: "“先有自我才无枷锁”",
+    image: publicAsset("friends/hsy.jpg"),
+    alt: "Haaaa",
+  },
+  {
     title: "kk34",
     subtitle: "我不当Curfur好久了",
     description: "“那些打不死我的一直在打我。”",
@@ -138,8 +145,8 @@ export const friendMenuItems = [
   },
   {
     title: "Calmer",
-    subtitle: "Author",
-    description: "“更冷静一点。”",
+    subtitle: "叽里咕噜说啥呢",
+    description: "“吃好喝好睡好玩好。”",
     image: publicAsset("friends/calmer.jpg"),
     alt: "Calmer",
   },

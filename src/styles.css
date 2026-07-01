@@ -77,6 +77,14 @@ img {
   max-width: 100%;
 }
 
+img,
+video,
+canvas {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import ScrollStack, { ScrollStackItem } from "../components/ScrollStack";
 import FadeIn from "../components/FadeIn";
 import SectionHeading from "../components/SectionHeading";
@@ -108,17 +109,62 @@ const projects = [
 ];
 
 function ProjectMedia({ project }) {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const video = videoRef.current;
+    if (!container || !video) return undefined;
+
+    if (!("IntersectionObserver" in window)) {
+      setHasLoaded(true);
+      video.play().catch(() => {});
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasLoaded(true);
+          video.play().catch(() => {});
+          return;
+        }
+
+        video.pause();
+      },
+      { rootMargin: "220px 0px", threshold: 0.18 },
+    );
+
+    observer.observe(container);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!hasLoaded || !video) return;
+
+    video.load();
+    video.play().catch(() => {});
+  }, [hasLoaded]);
+
   return (
-    <div className="jack-project-media jack-project-media-video">
+    <div className="jack-project-media jack-project-media-video" ref={containerRef}>
       <video
+        ref={videoRef}
         aria-label={project.media.label}
-        src={project.media.src}
-        autoPlay
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="none"
+        controlsList="nodownload noplaybackrate noremoteplayback"
+        disablePictureInPicture
+        disableRemotePlayback
+        draggable={false}
       >
+        {hasLoaded ? <source src={project.media.src} type="video/mp4" /> : null}
         Your browser does not support embedded videos.
       </video>
     </div>

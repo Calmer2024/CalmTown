@@ -16,6 +16,8 @@ export default function ElectricBorder({
   const animationRef = useRef(null);
   const timeRef = useRef(0);
   const lastFrameTimeRef = useRef(0);
+  const lastDrawTimeRef = useRef(0);
+  const isVisibleRef = useRef(false);
 
   const random = useCallback((x) => (Math.sin(x * 12.9898) * 43758.5453) % 1, []);
 
@@ -162,7 +164,25 @@ export default function ElectricBorder({
     let { width, height } = updateSize();
     let lastDpr = Math.min(window.devicePixelRatio || 1, 2);
 
+    const startAnimation = () => {
+      if (!animationRef.current) {
+        animationRef.current = requestAnimationFrame(drawElectricBorder);
+      }
+    };
+
     const drawElectricBorder = (currentTime) => {
+      animationRef.current = null;
+
+      if (!isVisibleRef.current && !reduceMotion) {
+        return;
+      }
+
+      if (!reduceMotion && currentTime - lastDrawTimeRef.current < 1000 / 30) {
+        startAnimation();
+        return;
+      }
+
+      lastDrawTimeRef.current = currentTime;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       if (dpr !== lastDpr) {
         lastDpr = dpr;
@@ -214,7 +234,7 @@ export default function ElectricBorder({
       ctx.stroke();
 
       if (!reduceMotion) {
-        animationRef.current = requestAnimationFrame(drawElectricBorder);
+        startAnimation();
       }
     };
 
@@ -222,16 +242,34 @@ export default function ElectricBorder({
       const newSize = updateSize();
       width = newSize.width;
       height = newSize.height;
+      startAnimation();
     });
     resizeObserver.observe(container);
 
-    animationRef.current = requestAnimationFrame(drawElectricBorder);
+    let visibilityObserver;
+    if ("IntersectionObserver" in window) {
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          isVisibleRef.current = entry.isIntersecting;
+          if (entry.isIntersecting) {
+            lastFrameTimeRef.current = 0;
+            startAnimation();
+          }
+        },
+        { rootMargin: "220px 0px", threshold: 0.05 },
+      );
+      visibilityObserver.observe(container);
+    } else {
+      isVisibleRef.current = true;
+      startAnimation();
+    }
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
       resizeObserver.disconnect();
+      visibilityObserver?.disconnect();
     };
   }, [color, speed, chaos, thickness, borderRadius, octavedNoise, getRoundedRectPoint]);
 
